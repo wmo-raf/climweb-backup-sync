@@ -1,0 +1,100 @@
+2025-04-02 12:23:13,805 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:23:48,495 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:24:34,618 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:24:41,883 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:24:41,900 - INFO - Started watching: /data
+2025-04-02 12:25:34,641 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:25:34,649 - INFO - Started watching: /data
+2025-04-02 12:30:13,660 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:30:13,665 - INFO - Starting Watchdog service...
+2025-04-02 12:30:13,672 - INFO - Started watching: /data
+2025-04-02 12:32:33,635 - INFO - New file detected: /data/backup copy.txt
+2025-04-02 12:32:35,140 - WARNING - Encountered 403 Forbidden with reason "accessNotConfigured"
+2025-04-02 12:35:03,889 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:35:03,893 - INFO - Starting Watchdog service...
+2025-04-02 12:35:03,897 - INFO - Started watching: /data
+2025-04-02 12:35:10,621 - INFO - New file detected: /data/backup copy.txt
+2025-04-02 12:35:13,072 - INFO - Fetched 0 files from Google Drive.
+2025-04-02 12:36:20,250 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:36:20,254 - INFO - Starting Watchdog service...
+2025-04-02 12:36:20,260 - INFO - Started watching: /data
+2025-04-02 12:36:27,318 - INFO - New file detected: /data/backup copy 2.txt
+2025-04-02 12:39:01,179 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:39:01,184 - INFO - Starting Watchdog service...
+2025-04-02 12:39:01,188 - INFO - Started watching: /data
+2025-04-02 12:39:38,179 - INFO - Detected change in: /data/backup.txt
+2025-04-02 12:39:40,952 - INFO - Fetched 0 files from Google Drive.
+2025-04-02 12:39:43,534 - INFO - Uploaded backup.txt (ID: 1buW4x9VsezhnbFAdA9k7Q_8te0NoOKkP).
+2025-04-02 12:39:43,536 - INFO - Detected change in: /data/backup.txt
+2025-04-02 12:39:44,215 - INFO - Fetched 0 files from Google Drive.
+2025-04-02 12:39:47,314 - INFO - Uploaded backup.txt (ID: 1hsC2Bjl6FyqQ_yIvYhO9Br8FYE-HLot1).
+2025-04-02 12:39:50,761 - INFO - Fetched 1 files from Google Drive.
+2025-04-02 12:39:52,092 - INFO - Deleted backup.txt from Google Drive.
+2025-04-02 12:39:52,095 - INFO - File backup.txt deleted locally. Removed from Google Drive.
+2025-04-02 12:39:52,096 - INFO - New file detected: /data/backup1.txt
+2025-04-02 12:39:53,078 - INFO - Fetched 1 files from Google Drive.
+2025-04-02 12:39:55,441 - INFO - Uploaded backup1.txt (ID: 164ou6rFsa8HVBscEmvOR40trwbZlQAm_).
+2025-04-02 12:39:55,444 - INFO - Detected change in: /data/backup1.txt
+2025-04-02 12:39:56,153 - INFO - Fetched 1 files from Google Drive.
+2025-04-02 12:39:58,452 - INFO - Uploaded backup1.txt (ID: 1Z94mon0s7bvwIUgao8ijnthj2Nav6RD5).
+2025-04-02 12:42:59,005 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:42:59,014 - INFO - Starting Watchdog service...
+2025-04-02 12:42:59,027 - INFO - Started watching: /data
+2025-04-02 12:43:24,667 - INFO - Detected change in: /data/backup1.txt
+2025-04-02 12:43:26,342 - INFO - No existing file with extension .txt. Uploading new file.
+2025-04-02 12:43:28,903 - INFO - Uploaded backup1.txt (ID: 1xsi8afxvskBNOdMDXSz66ojoInT2vm5t).
+2025-04-02 12:43:28,904 - INFO - Detected change in: /data/backup1.txt
+2025-04-02 12:43:29,478 - INFO - Replacing existing file with extension .txt
+2025-04-02 12:43:31,979 - INFO - Updated /data/backup1.txt (ID: 1xsi8afxvskBNOdMDXSz66ojoInT2vm5t).
+2025-04-02 12:43:51,700 - INFO - New file detected: /data/backup2.txt
+2025-04-02 12:43:52,246 - INFO - Replacing existing file with extension .txt
+2025-04-02 12:43:54,764 - INFO - Updated /data/backup2.txt (ID: 1xsi8afxvskBNOdMDXSz66ojoInT2vm5t).
+2025-04-02 12:47:19,236 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 12:47:19,240 - INFO - Starting Watchdog service...
+2025-04-02 12:47:19,245 - INFO - Started watching: /data
+2025-04-02 12:47:31,160 - INFO - New file detected: /data/backup2 copy.txt
+2025-04-02 12:47:33,163 - INFO - Uploading new file: backup2 copy.txt
+2025-04-02 12:47:36,010 - INFO - Uploaded backup2 copy.txt (ID: 17-gLAusz07Je1ExULMuGf9PC6bGyh6BF).
+2025-04-02 12:47:36,012 - INFO - Detected change in: /data/backup2 copy.txt
+2025-04-02 12:47:36,591 - INFO - Uploading new file: backup2 copy.txt
+2025-04-02 12:47:38,988 - INFO - Uploaded backup2 copy.txt (ID: 1adNYcuWhhzVjG1NL4ogeKT7jjjGCKDah).
+2025-04-02 12:48:18,129 - INFO - New file detected: /data/backup.txt
+2025-04-02 12:48:18,702 - INFO - Uploading new file: backup.txt
+2025-04-02 12:48:21,191 - INFO - Uploaded backup.txt (ID: 1E854UzVg0WfjR4WCYfgcfF3S951iq-bF).
+2025-04-02 12:48:33,312 - INFO - Detected change in: /data/backup copy.txt
+2025-04-02 12:48:34,019 - INFO - Uploading new file: backup copy.txt
+2025-04-02 12:48:36,778 - INFO - Uploaded backup copy.txt (ID: 15Zj5ARU0YY-ePM7bVAUwVhKOxdpOWAl1).
+2025-04-02 12:48:36,780 - INFO - Detected change in: /data/backup copy.txt
+2025-04-02 12:48:37,311 - INFO - Uploading new file: backup copy.txt
+2025-04-02 12:48:39,842 - INFO - Uploaded backup copy.txt (ID: 12gaOF-MYYdhhDfst6l7GxDSfKiM1kREE).
+2025-04-02 13:39:32,659 - INFO - Detected change in: /data/backup copy.txt
+2025-04-02 13:39:49,028 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 13:39:49,033 - INFO - Starting Watchdog service...
+2025-04-02 13:39:49,040 - INFO - Started watching: /data
+2025-04-02 13:40:09,602 - INFO - Detected change in: /data/backup copy.txt
+2025-04-02 13:40:11,127 - INFO - Uploading new file: backup copy.txt
+2025-04-02 13:40:14,014 - INFO - Uploaded backup copy.txt (ID: 1o93BM3z7rcnotucgP0XVkXmo9W7KKKfz).
+2025-04-02 13:40:14,017 - INFO - Detected change in: /data/backup copy.txt
+2025-04-02 13:40:14,574 - INFO - Uploading new file: backup copy.txt
+2025-04-02 13:40:17,076 - INFO - Uploaded backup copy.txt (ID: 1N5v4uR5zRkMq9k4s0npV4USmUGSijdpD).
+2025-04-02 13:40:21,622 - INFO - Detected change in: /data/backup.txt
+2025-04-02 13:40:22,401 - INFO - Uploading new file: backup.txt
+2025-04-02 13:40:25,099 - INFO - Uploaded backup.txt (ID: 1ozl3hRdBF3sfS2qk8Fr3Y0T8B3ipDiet).
+2025-04-02 13:40:25,103 - INFO - Detected change in: /data/backup.txt
+2025-04-02 13:40:25,700 - INFO - Uploading new file: backup.txt
+2025-04-02 13:40:28,814 - INFO - Uploaded backup.txt (ID: 1dzWBTlZKiJbRuW_Ajl4bbsGthZcjib2s).
+2025-04-02 14:11:14,504 - INFO - file_cache is only supported with oauth2client<4.0.0
+2025-04-02 14:11:14,513 - INFO - Starting Watchdog service...
+2025-04-02 14:11:14,523 - INFO - Started watching: /data
+2025-04-02 14:11:41,309 - INFO - Detected change in: /data/backup copy 2.txt
+2025-04-02 14:11:43,246 - INFO - Uploading new file: backup copy 2.txt
+2025-04-02 14:11:45,997 - INFO - Uploaded backup copy 2.txt (ID: 1Yl9GlBCjpi9gBWLe9ZI3Zuxmf3EZmyPN).
+2025-04-02 14:11:46,001 - INFO - Detected change in: /data/backup copy 2.txt
+2025-04-02 14:11:46,556 - INFO - Uploading new file: backup copy 2.txt
+2025-04-02 14:11:49,202 - INFO - Uploaded backup copy 2.txt (ID: 1_gYFf4csrF8Yz5hawfPaF1z0tYzB9xsP).
+2025-04-02 14:12:31,086 - INFO - Detected change in: /data/backup.txt
+2025-04-02 14:12:31,911 - INFO - Uploading new file: backup.txt
+2025-04-02 14:12:34,680 - INFO - Uploaded backup.txt (ID: 11yilG0fCySfpq9KwIKZk6-5ubRWkOFdp).
+2025-04-02 14:12:34,685 - INFO - Detected change in: /data/backup.txt
+2025-04-02 14:12:35,274 - INFO - Uploading new file: backup.txt
+2025-04-02 14:12:37,600 - INFO - Uploaded backup.txt (ID: 1BMG1JucvahTQRewgfBL8iGR7WuhIihg3).

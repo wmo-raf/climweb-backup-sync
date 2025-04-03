@@ -1,0 +1,10 @@
+version: '3'
+services:
+  google-drive-sync:
+    build: .
+    volumes:
+      - ${LOCAL_FOLDER}:/data  # Use environment variable for local folder
+      - ${CREDENTIALS_FILE}:/app/credentials.json  # Use env variable for credentials
+      - ${LOG_FILE}:/app/sync.log  # Use env variable for logs
+    env_file:
+      - .env  # Load variables from .env
