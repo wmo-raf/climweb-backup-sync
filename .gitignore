@@ -1,3 +1,4 @@
 *.json
 .env
-/backup
+/data
+*.tar.gz
