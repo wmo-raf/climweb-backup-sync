@@ -2,3 +2,4 @@
 .env
 /data
 *.tar.gz
+rclone_config/

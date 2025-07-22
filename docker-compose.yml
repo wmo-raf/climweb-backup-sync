@@ -12,4 +12,4 @@ services:
     env_file: .env
     volumes:
       - ${BACKUP_DIR}:/backup
-      - /Users/grace/.config/rclone:/app/.config/rclone:ro
+      - ./rclone_config:/root/.config/rclone

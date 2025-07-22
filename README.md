@@ -14,6 +14,14 @@ This Docker setup creates and uploads a compressed `.tar.gz` backup of your spec
    ```
    Ensure your `~/.config/rclone/rclone.conf` file is available.
 
+2. Make a copy of rclone config
+
+    ```
+    mkdir -p rclone_config
+    
+    cp ~/.config/rclone/rclone.conf rclone_config/
+    ```
+
 2. **Create a `.env` file**
    ```env
    REMOTE_FOLDER=gdrive:"climweb_backup/"
