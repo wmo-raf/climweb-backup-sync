@@ -1,9 +1,9 @@
-## ClimWeb Docker Backup
+## ClimWeb Backup
 
-This Docker setup creates and uploads a compressed `.tar.gz` backup of your specified folder to a remote (e.g. Google Drive) using Rclone daily at midnight.
+This creates and uploads a compressed `.tar.gz` backup of your specified folder to a remote (e.g. Google Drive) using Rclone daily at midnight.
 
 ### Requirements
-- Docker and Docker Compose installed
+- Docker Engine & Docker Compose Plugin : Ensure that Docker Engine is installed and running on the machine where you plan to execute the docker-compose command https://docs.docker.com/engine/install/. Docker Engine is the runtime environment for containers.
 - [Rclone installed](https://rclone.org/install/) **on the host** to create and test remotes
 - A configured Rclone remote (run `rclone config` on your host)
 
