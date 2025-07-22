@@ -42,7 +42,7 @@ This creates and uploads a compressed `.tar.gz` backup of your specified folder 
 
     ```env
     REMOTE_FOLDER=gdrive:"climweb_backup/"
-    BACKUP_DIR=/data
+    BACKUP_DIR=/home/cms/climweb/climweb/backup/
     ```
 
 5. **Build and run the container**
