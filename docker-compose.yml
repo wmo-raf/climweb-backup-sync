@@ -1,0 +1,15 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  climweb-backup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BACKUP_DIR=${BACKUP_DIR}
+    container_name: climweb-backup
+    env_file: .env
+    volumes:
+      - ${BACKUP_DIR}:/backup
+      - /Users/grace/.config/rclone:/app/.config/rclone:ro
