@@ -22,6 +22,7 @@ This creates and uploads a compressed `.tar.gz` backup of your specified folder 
    ```bash
    rclone config
    ```
+   
    Ensure your `~/.config/rclone/rclone.conf` file is available.
 
 3. **Make a copy of rclone config**
@@ -41,16 +42,16 @@ This creates and uploads a compressed `.tar.gz` backup of your specified folder 
     and edit below environmental variables
 
     ```env
-    REMOTE_FOLDER=gdrive:"climweb_backup/"
+    REMOTE_FOLDER="gdrive:climweb_backup/"
     BACKUP_DIR=/home/cms/climweb/climweb/backup/
     ```
 
 5. **Build and run the container**
 
    ```bash
-   docker-compose build
+   docker compose build
 
-   docker-compose up -d
+   docker compose up -d
    ```
 
 ### Notes
