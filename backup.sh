@@ -26,6 +26,6 @@ rclone $RCLONE_FLAGS copy "${ARCHIVE_FILE}" "${REMOTE}" \
 
 # Delete old files from remote (>3 days old)
 echo "Deleting old files from remote ..."
-rclone $RCLONE_FLAGS delete --min-age 3d "${REMOTE}"
+rclone $RCLONE_FLAGS delete --min-age 2d "${REMOTE}" --drive-use-trash=false
 
 echo "Sync complete."
