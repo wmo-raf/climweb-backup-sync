@@ -49,9 +49,7 @@ This creates and uploads a compressed `.tar.gz` backup of your specified folder 
 5. **Build and run the container**
 
    ```bash
-   docker compose build
-
-   docker compose up -d
+   docker compose up -d --build
    ```
 
 ### Notes
