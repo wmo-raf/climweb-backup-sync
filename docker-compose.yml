@@ -1,5 +1,6 @@
 services:
   climweb-backup:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
