@@ -38,13 +38,13 @@ The backup system:
 
 ## 1. Clone repository
 
-    ```
-    git clone https://github.com/wmo-raf/climweb-backup-sync.git
-    ```
+ ```
+ git clone https://github.com/wmo-raf/climweb-backup-sync.git
+ ```
 
-    ```
-    cd climweb-backup-sync
-    ```
+ ```
+ cd climweb-backup-sync
+ ```
 
 ## 2. Verify or Create SSH Keys (Source Server)
 
@@ -189,7 +189,7 @@ DEST_PATH=user@destination_ip:/data/backups
 Build container and start the service:
 
 ```bash
-   docker compose up -d --build climweb-backup-rsync
+docker compose up -d --build climweb-backup-rsync
 ```
 
 Verify container is running:
