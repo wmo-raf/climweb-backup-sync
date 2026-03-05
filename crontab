@@ -1,1 +1,0 @@
-0 0 * * * /app/backup.sh >> /var/log/backup.log 2>&1

@@ -1,6 +1,8 @@
-## ClimWeb Backup
+## ClimWeb Backup to Google Drive / One Drive
 
 This creates and uploads a compressed `.tar.gz` backup of your specified folder to a remote (e.g. Google Drive) using Rclone daily at midnight UTC + 00.
+
+> Note: This guide covers backing up to google drive or one drive. Refer to [Backup To Remote Server Guide](./Backup-to-Remote-Server.md) if you would like to instead backup to another server.
 
 ### Requirements
 - Docker Engine & Docker Compose Plugin : Ensure that Docker Engine is installed and running on the machine where you plan to execute the docker-compose command https://docs.docker.com/engine/install/. Docker Engine is the runtime environment for containers.
@@ -139,7 +141,7 @@ This creates and uploads a compressed `.tar.gz` backup of your specified folder 
     y/n> n
    ```
 
-   **Config Token (copy the rclone command and run it on your local machine)**
+   **Config Token (copy the rclone command `(rclone authorize "drive" "eyJzY29wZSI6ImRyaXZlLmZpbGUifQ")` and run it on your local machine)**
    Install rclone on your local machine first!
    
    ```bash
@@ -184,7 +186,7 @@ This creates and uploads a compressed `.tar.gz` backup of your specified folder 
     ```
     mkdir -p rclone_config
 
-    cp ~/.config/rclone/rclone.conf rclone_config/
+    cp ~/.config/rclone/rclone.conf rclone/config/
     ```
 
 5. **Create a `.env` file** 
@@ -207,7 +209,7 @@ This creates and uploads a compressed `.tar.gz` backup of your specified folder 
 6. **Build and run the container**
 
    ```bash
-   docker compose up -d --build
+   docker compose up -d --build climweb-backup-rclone
    ```
 
 ### Notes
