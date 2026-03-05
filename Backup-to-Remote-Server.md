@@ -146,7 +146,7 @@ ssh user@destination_ip
 Create the backup directory:
 
 ```bash
-mkdir -p /data/backups
+mkdir -p /data/backups && mkdir -p /data/backups/latest
 ```
 
 Set permissions:
