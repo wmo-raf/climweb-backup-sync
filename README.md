@@ -185,8 +185,10 @@ This creates and uploads a compressed `.tar.gz` backup of your specified folder 
 
     ```
     mkdir -p rclone_config
-
-    cp ~/.config/rclone/rclone.conf rclone/config/
+    ```
+    
+    ```
+    cp ~/.config/rclone/rclone.conf rclone_config/
     ```
 
 5. **Create a `.env` file** 
