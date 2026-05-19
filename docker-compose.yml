@@ -21,4 +21,4 @@ services:
       - ${BACKUP_DIR}:/backup
       - ./rclone/config:/root/.config/rclone
       - ~/.ssh:/root/.ssh:ro
-      - ${SSH_KEY_PATH}:/root/ssh:ro
+      # - ${SSH_KEY_PATH}:/root/ssh:ro
