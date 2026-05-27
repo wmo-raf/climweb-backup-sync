@@ -1,223 +1,220 @@
-## ClimWeb Backup to Google Drive / One Drive
+## ClimWeb Cloud Backup
 
-This creates and uploads a compressed `.tar.gz` backup of your specified folder to a remote (e.g. Google Drive) using Rclone daily at midnight UTC + 00.
+Uploads ClimWeb backups to a cloud remote using a storage-efficient strategy:
 
-> Note: This guide covers backing up to google drive or one drive. Refer to [Backup To Remote Server Guide](./Backup-to-Remote-Server.md) if you would like to instead backup to another server.
+| Backup type | Frequency | Retention | Typical size |
+|-------------|-----------|-----------|--------------|
+| Database (`.psql.bin`) | Daily | 5 days | ~3–5 MB/file |
+| Media (`.tar`) | Weekly | 1 snapshot | varies |
 
-### Requirements
-- Docker Engine & Docker Compose Plugin : Ensure that Docker Engine is installed and running on the machine where you plan to execute the docker-compose command https://docs.docker.com/engine/install/. Docker Engine is the runtime environment for containers.
-- [Rclone installed](https://rclone.org/install/) **on the host** to create and test remotes
-- A configured Rclone remote (run `rclone config` on your host)
+Files are uploaded individually with date-stamped names — nothing is ever overwritten.
 
-### Setup
-1. **Clone repository**
+---
 
-    ```
-    git clone https://github.com/wmo-raf/climweb-backup-sync.git
-    ```
+## Options
 
-    ```
-    cd climweb-backup-sync
-    ```
+| Option | Free storage | Credit card? | Best for |
+|--------|-------------|-------------|----------|
+| **Google Drive** ⭐ | 15 GB (shared) | No | Sites with a dedicated Google account |
+| **OneDrive** | 5 GB | No | Sites with a Microsoft/Office 365 account |
+| **Another server** | — | No | Strict data sovereignty requirements |
 
-2. **Configure Rclone** - [install RClone first](https://rclone.org/install/) 
-   ```bash
-   rclone config
-   ```
+For backing up to another server via rsync, see [Backup To Remote Server Guide](./Backup-to-Remote-Server.md).
 
-   answer as below:
+---
 
-   **New Remote**
-   
-    ```bash
-    No remotes found, make a new one?
-    n) New remote
-    s) Set configuration password
-    q) Quit config
-    n/s/q> n
-    ```
+## Option 1 — Google Drive (Recommended)
 
+Uses a service account — no OAuth browser flow, no SSH tunnel, no credit card. All steps are done in the Google Cloud web console and Google Drive. One-time setup of about 10 minutes.
 
-    **Remote name 'gdrive'**
-   
-   ```bash
+> Use a **dedicated Google account for the site** rather than someone's personal account. The 15 GB is shared with Gmail and Google Photos.
 
-   Enter name for new remote.
-    name> gdrive
-   ```
+### Step 1 — Enable the Drive API
 
-    **Storage type number corresponding to google drive e.g 18**
+1. Sign in to [https://console.cloud.google.com/](https://console.cloud.google.com/) with the site's Google account (no billing setup required)
+2. **APIs & Services → Library** → search **Google Drive API** → Enable
 
-    ```bash
-      \ (ftp)
-    17 / Google Cloud Storage (this is not Google Drive)
-       \ (google cloud storage)
-    18 / Google Drive
-       \ (drive)
-    19 / Google Photos
-       \ (google photos)
-    20 / HTTP
-       \ (http)
-    
+### Step 2 — Create a service account and download its key
+
+1. **IAM & Admin → Service Accounts → Create Service Account**
+2. Give it a name (e.g. `climweb-backup`) → Create and continue → Done
+3. Click the service account → **Keys tab → Add Key → Create new key → JSON** → Download
+
+### Step 3 — Share a Google Drive folder with the service account
+
+1. In Google Drive, create a folder (e.g. `ClimWeb Backups`)
+2. Right-click the folder → **Share** → paste the service account email
+   (looks like `climweb-backup@your-project.iam.gserviceaccount.com`) → set to **Editor** → Send
+
+### Step 4 — Encode the key file
+
+No file transfer needed. Convert the downloaded JSON to a single text string:
+
+**Mac / Linux:**
+```bash
+base64 -w0 service-account.json
+```
+
+**Windows (PowerShell):**
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("service-account.json")) | clip
+```
+
+Copy the output (it will be a long single line of text).
+
+### Step 5 — Clone and set environment variables
+
+```bash
+git clone https://github.com/wmo-raf/climweb-backup-sync.git
+cd climweb-backup-sync
+cp .env.sample .env
+nano .env
+```
+
+```env
+BACKUP_DIR=/home/user/climweb/climweb/backup
+SITE_NAME=zambia
+REMOTE_FOLDER=gdrive:ClimWeb Backups/
+SERVICE_ACCOUNT_JSON_B64=<paste the base64 string here>
+DB_RETENTION_DAYS=10
+MEDIA_RETENTION_DAYS=3
+MEDIA_UPLOAD_WEEKDAY=1
+```
+
+The container will decode and write the JSON file automatically at startup. No SCP, no file transfer.
+
+### Step 6 — Copy the rclone config
+
+```bash
+cp rclone/config/rclone.conf.sample rclone/config/rclone.conf
+```
+
+The sample is already configured for Google Drive with a service account — no edits needed.
+
+### Step 7 — Start the backup container
+
+```bash
+docker compose up -d climweb-backup-rclone
+```
+
+Done. Backups will upload daily at midnight UTC.
+
+---
+
+## Option 2 — OneDrive
+
+Uses OAuth authentication via a temporary browser session. No credit card required — just a free Microsoft account. Requires a one-time SSH tunnel during setup.
+
+### Step 1 — Clone the repository
+
+```bash
+git clone https://github.com/wmo-raf/climweb-backup-sync.git
+cd climweb-backup-sync
+```
+
+### Step 2 — Start the setup container
+
+```bash
+docker compose --profile setup up climweb-backup-rclone-setup
+```
+
+### Step 3 — Open an SSH tunnel from your local machine
+
+In a new terminal on your **local computer** (not the server):
+
+```bash
+ssh -L 5572:localhost:5572 user@your-server-ip
+```
+
+> Port 5572 is only bound on the server's internal localhost — it is not exposed externally and requires no firewall changes. All traffic flows through your existing SSH connection on port 22.
+
+### Step 4 — Configure in your browser
+
+Open [http://localhost:5572](http://localhost:5572) in your local browser. Click **Config** → **New remote** → choose **OneDrive** → complete the Microsoft sign-in. The token is saved to `rclone/config/rclone.conf` on the server.
+
+### Step 5 — Stop the setup container
+
+```bash
+docker compose --profile setup down
+```
+
+### Step 6 — Set environment variables
+
+```bash
+cp .env.sample .env
+nano .env
+```
+
+```env
+BACKUP_DIR=/home/user/climweb/climweb/backup
+SITE_NAME=zambia
+REMOTE_FOLDER=onedrive:ClimWeb Backups/
+DB_RETENTION_DAYS=10
+MEDIA_RETENTION_DAYS=3
+MEDIA_UPLOAD_WEEKDAY=1
+```
+
+> Note: OneDrive's free tier is 5 GB. With the default retention settings (~50 MB for DB + 1 weekly media snapshot) this is enough for most installations, but large media folders may require reducing `DB_RETENTION_DAYS`.
+
+### Step 7 — Start the backup container
+
+```bash
+docker compose up -d climweb-backup-rclone
+```
+
+---
+
+## Testing and logs
+
+**Run a backup manually:**
+
+```bash
+docker exec -it climweb-backup-rclone /app/rclone_daily.sh
+```
+
+**View logs:**
+
+```bash
+docker logs climweb-backup-rclone
+# or inside the container:
+docker exec -it climweb-backup-rclone tail -f /var/log/backup.log
+```
+
+---
+
+## Adjust the backup schedule
+
+Edit `rclone/crontab` (default: midnight UTC):
+
+```
+0 0 * * * /app/rclone_daily.sh >> /var/log/backup.log 2>&1
+```
+
+Rebuild after changes:
+
+```bash
+docker compose up -d --build climweb-backup-rclone
+```
+
+---
+
+## Remote storage layout
+
+```
+ClimWeb Backups/              (your Google Drive or OneDrive folder)
+  db/
+    zambia-db-2026-05-23.psql.bin
+    zambia-db-2026-05-24.psql.bin
     ...
-    Storage> 18
-   ```
+    zambia-db-2026-05-27.psql.bin   ← daily DB snapshots, ~3–5 MB each
+  media/
+    zambia-media-2026-05-26.tar     ← 1 weekly media snapshot
+```
 
-   **Client ID and Client Secret press 'enter' to leave empty**
+---
 
-    ```bash
-    Option client_id.
-    Google Application Client Id
-    Setting your own is recommended.
-    See https://rclone.org/drive/#making-your-own-client-id for how to create your own.
-    If you leave this blank, it will use an internal key which is low performance.
-    Enter a value. Press Enter to leave empty.
-    client_id> 
-    
-    Option client_secret.
-    OAuth Client Secret.
-    Leave blank normally.
-    Enter a value. Press Enter to leave empty.
-    client_secret>
-    ```
+## Notes
 
-   **Scope select '3'**
-
-   Option scope.
-
-   ```bash
-    Scope that rclone should use when requesting access from drive.
-    Choose a number from below, or type in your own value.
-    Press Enter to leave empty.
-     1 / Full access all files, excluding Application Data Folder.
-       \ (drive)
-     2 / Read-only access to file metadata and file contents.
-       \ (drive.readonly)
-       / Access to files created by rclone only.
-     3 | These are visible in the drive website.
-       | File authorization is revoked when the user deauthorizes the app.
-       \ (drive.file)
-       / Allows read and write access to the Application Data folder.
-     4 | This is not visible in the drive website.
-       \ (drive.appfolder)
-       / Allows read-only access to file metadata but
-     5 | does not allow any access to read or download file content.
-       \ (drive.metadata.readonly)
-    scope> 3
-   ```
-
-   **Service account file press 'enter' to leave empty**
-   
-   Option service_account_file.
-   
-   ```bash
-    Service Account Credentials JSON file path.
-    Leave blank normally.
-    Needed only if you want use SA instead of interactive login.
-    Leading `~` will be expanded in the file name as will environment variables such as `${RCLONE_CONFIG_DIR}`.
-    Enter a value. Press Enter to leave empty.
-    service_account_file> 
-
-   ```
-
-   **Press enter to skip advanced configs**
-
-   ```bash
-    Edit advanced config?
-    y) Yes
-    n) No (default)
-    y/n>
-   ```
-
-   **Autoconfig type 'n'**
-   
-   ```bash
-   Use auto config?
-     * Say Y if not sure
-     * Say N if you are working on a remote or headless machine
-    
-    y) Yes (default)
-    n) No
-    y/n> n
-   ```
-
-   **Config Token (copy the rclone command `(rclone authorize "drive" "eyJzY29wZSI6ImRyaXZlLmZpbGUifQ")` and run it on your local machine)**
-   Install rclone on your local machine first!
-   
-   ```bash
-   Option config_token.
-    For this to work, you will need rclone available on a machine that has
-    a web browser available.
-    For more help and alternate methods see: https://rclone.org/remote_setup/
-    Execute the following on the machine with the web browser (same rclone
-    version recommended):
-            rclone authorize "drive" "eyJzY29wZSI6ImRyaXZlLmZpbGUifQ"
-    Then paste the result.
-    Enter a value.
-    config_token>
-   ```
-   Locally select the gmail account to be connected to rclone and copy the token generated from the above command onto your remote server.
-
-    **Shared Drive press 'enter' to leave empty**
-   
-   ```bash
-    Configure this as a Shared Drive (Team Drive)?
-
-    y) Yes
-    n) No (default)
-    y/n>
-   ```
-    
-   **Keep drive type 'y**'
-
-   ```bash
-   - team_drive: 
-    Keep this "gdrive" remote?
-    y) Yes this is OK (default)
-    e) Edit this remote
-    d) Delete this remote
-    y/e/d> y
-   ```
-
-   Completed successfully.
-   
-4. **Make a copy of rclone config**
-
-    ```
-    mkdir -p rclone_config
-    ```
-    
-    ```
-    cp ~/.config/rclone/rclone.conf rclone_config/
-    ```
-
-5. **Create a `.env` file** 
-
-    ```
-    cp .env.sample .env
-    ```
-
-    ```sh
-    nano .env
-    ```
-
-    and edit below environmental variables appropriately
-
-    ```env
-    REMOTE_FOLDER="gdrive:climweb_backup/"
-    BACKUP_DIR=/home/cms/climweb/climweb/backup/
-    ```
-
-6. **Build and run the container**
-
-   ```bash
-   docker compose up -d --build climweb-backup-rclone
-   ```
-
-### Notes
-- Backups older than 3 days are deleted from the remote.
-- Archives are stored in `/path/to/local/backup` on your host.
-- Rclone config is mounted read-only from the host.
-
-### Crontab
-Adjust the `crontab` file to set the backup schedule. By default, it runs once daily (to be defined in the crontab file).
+- `rclone/config/rclone.conf` and `rclone/config/service-account.json` are git-ignored and should never be committed.
+- Make sure `climweb dbbackup` and `climweb mediabackup` run before this container's cron job each day. The script uploads the most recent file it finds in the backup directory.
+- To keep more media snapshots, increase `MEDIA_RETENTION_DAYS` — e.g. `28` keeps 4 weekly copies (uses ~4× the media file size on the remote).

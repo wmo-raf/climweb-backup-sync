@@ -3,18 +3,16 @@ FROM alpine:latest
 # Install required tools
 RUN apk add --no-cache bash curl tar rclone
 
-# Set working directory
 WORKDIR /app
 
-# Copy backup script
 COPY rclone_daily.sh /app/rclone_daily.sh
-RUN chmod +x /app/rclone_daily.sh
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/rclone_daily.sh /app/entrypoint.sh
 
-# Copy crontab config
 COPY crontab /etc/crontabs/root
 
-# Create log file so tail doesn't fail
 RUN touch /var/log/backup.log
-# Run cron in foreground
-CMD ["sh", "-c", "crond && tail -F /var/log/backup.log"]
 
+# rclone config is mounted at /config/rclone.conf (see docker-compose.yml)
+# service-account.json is written at startup from SERVICE_ACCOUNT_JSON_B64
+ENTRYPOINT ["/app/entrypoint.sh"]
