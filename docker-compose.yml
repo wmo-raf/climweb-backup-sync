@@ -16,30 +16,6 @@ services:
       - ./rclone/config:/config
 
   # ---------------------------------------------------------------------------
-  # One-time setup helper — runs rclone's web GUI so you can authenticate
-  # without installing rclone locally.
-  #
-  # Usage:
-  #   1. Start this container:
-  #        docker compose --profile setup up climweb-backup-rclone-setup
-  #   2. On your local machine, open an SSH tunnel:
-  #        ssh -L 5572:localhost:5572 user@your-server
-  #   3. Open http://localhost:5572 in your local browser and configure rclone.
-  #   4. Stop this container when done (Ctrl-C or docker compose --profile setup down).
-  #   5. Start the backup container normally.
-  # ---------------------------------------------------------------------------
-  climweb-backup-rclone-setup:
-    image: rclone/rclone:latest
-    container_name: climweb-backup-rclone-setup
-    command: rcd --rc-web-gui --rc-addr=0.0.0.0:5572 --rc-no-auth --config /config/rclone.conf
-    ports:
-      - "5572:5572"
-    volumes:
-      - ./rclone/config:/config
-    profiles:
-      - setup
-
-  # ---------------------------------------------------------------------------
   # Daily backup to another server via rsync over SSH
   # Start with: docker compose up -d climweb-backup-rsync
   # ---------------------------------------------------------------------------
