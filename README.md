@@ -1,3 +1,18 @@
+> # ⚠️ Archived — superseded by in-CMS backups
+>
+> **This repository is no longer maintained.** Cloud backups to Google Drive are
+> now built directly into the ClimWeb CMS admin, under **Settings → Backup** — no
+> command line, no separate container, and set up per site from the browser.
+>
+> Use that instead. See the setup guide in the ClimWeb repo at
+> `climweb/src/climweb/base/backups/README.md` (also linked from the Backup
+> settings page in the admin).
+>
+> This repo is kept only for reference and for existing rsync-to-another-server
+> setups that haven't migrated yet.
+
+---
+
 ## ClimWeb Cloud Backup
 
 Uploads ClimWeb backups to a cloud remote using a storage-efficient strategy:
